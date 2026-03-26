@@ -1,7 +1,9 @@
 #Girotto Final Project
+
 This project is about the relationship between music and mental health.
 
 ##How to build report
+
 1. Ensure all required R packages are installed (dplyr, readxl, ggplot2, knitr,
 and rmarkdown)
 
@@ -12,6 +14,7 @@ and rmarkdown)
 (You can also use the make rules to run individual Rscripts in the Terminal to render the report, but that is unnceccary and just using the "make" command is easier)
 
 ##Structure of Repository
+
 `code` folder houses all code further outlined in the below code description.
 
 `output` folder houses all outputs produced by the code, which is also further
@@ -28,6 +31,7 @@ folder
 formated report
 
 ##Code Description
+
 `code_01.R`
 - This code creates a table showing the avg of reported mental health outcomes by music genre to visualize if certain genres are associated with higher self reported mental health disorders
 -This code also saves the table as a `.rds` object called table1 in the `output` folder 
