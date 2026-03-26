@@ -1,18 +1,13 @@
----
-title: "README"
-output: html_document
----
-
 #Girotto Final Project
 This project is about the relationship between music and mental health.
 
 ##How to build report
-1. ensure all required R packages are installed (dplyr, readxl, ggplot2, knitr,
+1. Ensure all required R packages are installed (dplyr, readxl, ggplot2, knitr,
 and rmarkdown)
 
-2. ensure your organizational structure matches the below, and that the output folders are originally empty. If they are not, run "make clean" in the terminal.
+2. Ensure your organizational structure matches the below, and that the output folders are originally empty. If they are not, run "make clean" in the terminal.
 
-3. now that your project is set up and clean, run "make" in the terminal window. This will run all of the rules in the Makefile and render the final report.
+3. Now that your project is set up and clean, run "make" in the terminal window. This will run all of the rules in the Makefile and render the final report.
 
 (You can also use the make rules to run individual Rscripts in the Terminal to render the report, but that is unnceccary and just using the "make" command is easier)
 
