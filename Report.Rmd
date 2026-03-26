@@ -1,0 +1,96 @@
+---
+title: "Final Project Report"
+date: "`r Sys.Date()`"
+author: "Janna Girotto"
+output: html_document
+params:
+  production: TRUE
+  echo: FALSE
+---
+```{r, set-chunk-opts, echo = FALSE, eval = params$production}
+library(knitr)
+opts_chunk$set(
+  echo = FALSE, warning = FALSE, message = FALSE
+)
+```
+
+```{r, here_i_am, eval = params$production}
+here::i_am(
+  "report.Rmd"
+)
+```
+
+```{r, read code}
+library(dplyr) 
+library(ggplot2)
+library(readxl)
+music_data <- read_excel(
+  here::here("raw_data/music_mental_data.xlsx"), 
+  skip = 1
+)
+```
+
+# Introduction
+This dataset includes survey data regarding music, listening habits, and self-reported mental health status. The purpose of the analysis is to see if there are conenctions between different music genres and mental health. 
+
+## Data Description 
+This dataset contains `r ncol(music_data)` variables and had `r nrow(music_data)` respondents. Respondents were surveyed on 16 genres of music and 4 different mental health outcomes including anxiety, depression, insomnia, and OCD. On average respondents listened to music for `r mean(music_data$'Hours per day')` hours and the average age of respondents was `r mean(music_data$Age)` years old. 
+
+Some questions were not required, so there are blank and N/A responses to consider. 
+
+# Analysis, Table 1
+The below table shows the averages of the reported mental health outcomes by music genre. This table helps to visualize the analysis objective of if certain genres of music are associated with higher self-reported levels of different mental health disorders. 
+
+```{r, table 1}
+table_1 <- readRDS(
+  here::here("output/table1.rds")
+)
+
+table_1
+```
+We see in the table that Mean Anxiety was highest among Folk listeners (6.5667) while Mean Depression, Insomnia, and OCD were all highest amount Lofi listeners (6.6000, 5.6000 amd 3.4000 respectively). Mean Anxiety was lowest among Latin listeners (4.3333), Mean Insomnia was lowest among Rap listeners (2.2727), and Mean Depression and OCD were lowest among Gospel listeners (2.6667 and 0.3333 respectively).
+
+# Analysis, Figure 1
+This graph shows the association between hours of music the respondents listened to music per day and self reported effect on mental health.
+```{r, figure 1}
+figure_1 <- readRDS(
+  here::here("output/figure1.rds")
+)
+figure_1
+```
+
+This boxplot shows that people who reported that listening to music improved their mental health listened to music for a higher median number of hours per day than those who reported no effect or worsened effect. 
+
+# Analysis, Test 1
+This is a Fishers test to look at the association between age groups and the self-reported that listening to music has on mental health. I created a table and then ran a Fisher's Exact Test.
+```{r, test1}
+test1_table <- readRDS(
+  here::here("output/test1_table.rds")
+)
+knitr::kable(test1_table, caption = "Music Effect on Mental Health by Age Group")
+
+test1_results <- readRDS(
+  here::here("output/test1_result.rds")
+)
+test1_results
+```
+The results of the Fishers Test show that there is no statistically significant association. 
+
+# Analysis, Test 2
+This is a Fishers test using the Instrumentalist and Composer variables and seeing how self-reported identification as an Instrumentalist, Composer, or both affects self-reported perception of the effect of listening to music on mental health. I created a table and then ran a Fisher's Exact Test.
+```{r, test2}
+test2_table <- readRDS(
+  here::here("output/test2_table.rds")
+)
+knitr::kable(
+  test2_table,
+  digits = 2,
+  caption = "Music Effect on Mental Health by Musician Status"
+)
+
+test2_results <- readRDS(
+  here::here("output/test2_result.rds")
+)
+test2_results
+```
+This shows that there is a statistically significant association between musician type and music effect on mental health since the p value is less than 0.05. 
