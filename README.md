@@ -42,17 +42,17 @@ formated report
 The below codes are not required, they are just other measures of interest
 
 `code_03.R`
--This code creates a table showing age groups and self-reported impact of listening to music on mental health. I create age groups and then the table.
--This code saves the table as a `.rds` file called test1_table in the `output` folder
+- This code creates a table showing age groups and self-reported impact of listening to music on mental health. I create age groups and then the table.
+- This code saves the table as a `.rds` file called test1_table in the `output` folder
 
 `code_03.1.R`
 - This code reads in the table created in `code_03` from the `output` folder and then runs a Fisher's Test.
 - This code saves the result of that test in a `.rds` file called test1_result in the `output` folder
 
 `code_04.R`
--This code creates a table of self-reported identification as an Instrumentalist, Composer, or both and self-reported effect of listening to music on mental health.
--This code first creates categories and then the final table
--This code saves the created table as a `.rds` file called test2_table in the `output` folder
+- This code creates a table of self-reported identification as an Instrumentalist, Composer, or both and self-reported effect of listening to music on mental health.
+- This code first creates categories and then the final table
+- This code saves the created table as a `.rds` file called test2_table in the `output` folder
 
 `code_04.1.R`
 - This code reads in the table created in `code_04` from the `output` folder and then runs a Fisher's Test. 
