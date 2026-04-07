@@ -4,7 +4,7 @@ This project is about the relationship between music and mental health.
 
 ##How to build report
 
-1. Run make install to ensure that you are operating using the renv lockfile 
+1. Run "make install" to ensure that you are operating using the renv lockfile 
 associated with this project.
 
 2. Ensure your organizational structure matches the below, and that the output folders are originally empty. If they are not, run "make clean" in the terminal.

@@ -1,6 +1,5 @@
-library(dplyr) #loading packages in that I will need to use later on to make sure code runs.
-library(ggplot2)
-library(readxl)
+source(here::here("code/library.R"))
+
 here::i_am("code/code_01.R")
 
 music_data <- read_excel(
