@@ -11,7 +11,7 @@ associated with this project.
 
 3. Now that your project is set up and clean, run "make" in the terminal window. This will run all of the rules in the Makefile and render the final report.
 
-(You can also use the make rules to run individual Rscripts in the Terminal to render the report, but that is unnceccary and just using the "make" command is easier)
+(You can also use the make rules to run individual Rscripts in the Terminal to render the report, but that is unnceccsary and just using the "make" command is easier)
 
 ##Structure of Repository
 
