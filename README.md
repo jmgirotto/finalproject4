@@ -32,6 +32,10 @@ formated report
 
 ##Code Description
 
+`library.R`
+- This houses all the packages I used in my code, so I don't have to call it in
+each code document. 
+
 `code_01.R`
 - This code creates a table showing the avg of reported mental health outcomes by music genre to visualize if certain genres are associated with higher self reported mental health disorders
 -This code also saves the table as a `.rds` object called table1 in the `output` folder 
