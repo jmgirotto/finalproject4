@@ -7,10 +7,10 @@ The completed, built image for this project is on DockerHub: https://hub.docker.
 
 To build the image locally:
 1. Run "docker build -t jmgirotto/report-image ." in the terminal
-  NOTE - make sure you include the period `.`!!
+  NOTE - make sure you include the period .!!
   
 ## How to build report (Docker)  
-1. Run "make run" in the terminal for Mac Users OR make run-windows for Windows users
+1. Run "make run" in the terminal for Mac Users OR "make run-windows" for Windows users
   NOTE - the final report will be generated in a folder called `report/`
 
 ## How to build report (local/manual)
