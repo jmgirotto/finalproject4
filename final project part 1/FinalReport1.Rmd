@@ -1,0 +1,140 @@
+---
+title: "Final Project Part 1"
+author: "Janna Girotto"
+date: "`r Sys.Date()`"
+output: html_document
+params:
+  production: TRUE
+---
+
+```{r, set-chunk-opts, echo = FALSE, eval = params$production}
+#taken from in class example
+library(knitr)
+opts_chunk$set(
+  echo = FALSE, warning = FALSE, message = FALSE
+)
+```
+
+```{r, load_data}
+library(dplyr) #loading packages in that I will need to use later on to make sure code runs.
+library(ggplot2)
+library(readxl)
+music_data <- read_excel("raw_data/music_mental_data.xlsx",  skip = 1) #skip the first row because it was weirdly empty and made R want to re-assign titles. skip = 1 means it reads in data after that col and uses the actual headers we want
+```
+
+# Introduction
+This dataset includes survey data regarding music, listening habits, and self-reported mental health status. The purpose of the analysis is to see if there are conenctions between different music genres and mental health. 
+
+## Data Description 
+This dataset contains `r ncol(music_data)` variables and had `r nrow(music_data)` respondents. Respondents were surveyed on 16 genres of music and 4 different mental health outcomes including anxiety, depression, insomnia, and OCD. On average respondents listened to music for `r mean(music_data$'Hours per day')` hours and the average age of respondents was `r mean(music_data$Age)` years old. 
+
+Some questions were not required, so there are blank and N/A responses to consider. 
+
+## Analysis Objectives
+Some potential objectives of my analysis include the below questions included in my first data set project assignment. I worked on association between genre and mental health outcomes, listening hours and mental health outcomes, age groups and mental health, and musician status and mental health in this initial report. 
+
+# Potential Questions to consider for the future:
+
+Are certain genres of music associated with higher self-reported levels of different mental health disorders? 
+
+Does music of higher BPM predict higher self-reported levels of different mental health disorders?
+
+Is listening to music for more hours a day associated with reporting that music improves mental health? 
+
+Are certain age groups more likely to report that music improves mental health? 
+Are participants who self-reported as an instrumentalist or composer more likely to feel that music improves mental health? Or Is participant identification as an instrumentalist or composer associated with the belief that music improves mental health? 
+
+# Analysis, Table 1
+The below table shows the averages of the reported mental health outcomes by music genre. This table helps to visualize the analysis objective of if certain genres of music are associated with higher self-reported levels of different mental health disorders. 
+
+```{r, table_1}
+music_genre <- music_data %>% 
+  rename( `Favorite Genre` = `Fav genre`) %>% #renaming fav genre to make it look nicer in the end table
+  group_by(`Favorite Genre`) %>% #groups my data into rows for comparison in the table
+  summarise(
+    "Mean Anxiety" = mean(Anxiety),
+    "Mean Depression" = mean(Depression),
+    "Mean Insomnia" = mean(Insomnia),
+    "Mean OCD" = mean(OCD)
+  ) #created new variables for the table based on the calculation I wanted to do - in this case averages 
+knitr::kable(
+  music_genre,
+  digits = 4, #how many decimals do I want?
+  caption = "Mean Mental Health Outcomes by Favorite Music Genres" #title
+)
+```
+
+We see in the table that Mean Anxiety was highest among Folk listeners (6.5667) while Mean Depression, Insomnia, and OCD were all highest amount Lofi listeners (6.6000, 5.6000 amd 3.4000 respectively). Mean Anxiety was lowest among Latin listeners (4.3333), Mean Insomnia was lowest among Rap listeners (2.2727), and Mean Depression and OCD were lowest among Gospel listeners (2.6667 and 0.3333 respectively).
+
+# Analysis, Figure 1
+This graph shows the association between hours of music the respondents listened to music per day and self reported effect on mental health. 
+```{r, graph1, echo = FALSE}
+ggplot(music_data %>% filter(!is.na(`Music effects`)), #remove NA responses in my data
+       aes(x = `Music effects`, y = `Hours per day`))+
+  geom_boxplot(na.rm = TRUE)+ #also telling it here to ignore missing values when making my boxplot
+  labs(
+    title = "Hours of Music per Day by Music Effect on Mental Health",
+    x = "Music Effect on Mental Health",
+    y = "Hours per Day"
+  )
+```
+
+This boxplot shows that people who reported that listening to music improved their mental health listened to music for a higher median number of hours per day than those who reported no effect or worsened effect. 
+
+# Other thoughts/plans for the data
+## Potential 1
+
+Here I wanted to look at the association between age groups and the self-reported impact that listening to music has on mental health. I created a table and then ran a Fisher's Exact Test.
+```{r, age_music, echo = FALSE}
+age_music <- music_data %>% 
+  mutate(
+    age_group = case_when(
+      Age <= 12 ~ "Children",
+      Age <= 19 ~ "Teenager",
+      Age <= 40 ~ "Young Adult",
+      Age <= 59 ~ "Middle Aged",
+      Age > 59 ~ "Older Adult"
+    ) #creating the age groups I want to use for my test
+  )
+
+age_table <- table(age_music$age_group, age_music$`Music effects`)
+knitr::kable(
+  age_table,
+  caption = "Music Effect on Mental Health by Age Group"
+) #created a table for use in my test. I really wanted a pretty title so I used knitr, but could have used the base R. 
+
+fisher.test(age_table) #too few expected counts for Chi-Squared so had to use fisher
+```
+
+The results of the Fishers Test show that there is no statistically significant association. 
+
+## Potential 2
+
+This is a table using the Instrumentalist and Composer variables and seeing how self-reported identification as an Instrumentalist, Composer, or both affects self-reported perception of the effect of listening to music on mental health. 
+
+```{r, instrumentalist_composer, echo = FALSE}
+instrument_composer <- music_data %>% 
+  mutate(
+    musician_type = case_when(
+      Instrumentalist == "Yes" & Composer == "Yes" ~ "Both",
+      Instrumentalist == "Yes" & Composer == "No" ~ "Instrumentalist",
+      Instrumentalist == "No" & Composer == "Yes" ~ "Composer",
+      Instrumentalist == "No" & Composer == "No" ~ "Neither"
+    ) # create new variable names/categories for my table so I can look at musician identification. Basically saying that if these conditions are true ~ assign this name/title
+  ) %>% 
+  rename("Musician Type" = musician_type) #making the name prettier
+
+musician_table <- instrument_composer %>% 
+  filter(!is.na(`Music effects`)) %>%  #remove empty/NA answers
+  select(`Musician Type`, `Music effects`) %>% 
+  table() 
+
+knitr::kable(
+  musician_table,
+  digits = 2,
+  caption = "Music Effect on Mental Health by Musician Status"
+) 
+
+fisher.test(musician_table, workspace = 2e8) #got an error, internet said due to low workspace, added workspace = 2e8 to add memory, then code ran with no error
+```
+This shows that there is a statistically significant association between musician type and music effect on mental health since the p value is less than 0.05. 

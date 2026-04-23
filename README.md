@@ -1,8 +1,19 @@
-#Girotto Final Project
+# Girotto Final Project
 
 This project is about the relationship between music and mental health.
 
-##How to build report
+## How to Build Docker Image
+The completed, built image for this project is on DockerHub: https://hub.docker.com/repository/docker/jmgirotto/report-image/general
+
+To build the image locally:
+1. Run "docker build -t jmgirotto/report-image ." in the terminal
+  NOTE - make sure you include the period `.`!!
+  
+## How to build report (Docker)  
+1. Run "make run" in the terminal for Mac Users OR make run-windows for Windows users
+  NOTE - the final report will be generated in a folder called `report/`
+
+## How to build report (local/manual)
 
 1. Run "make install" to ensure that you are operating using the renv lockfile 
 associated with this project.
@@ -13,7 +24,7 @@ associated with this project.
 
 (You can also use the make rules to run individual Rscripts in the Terminal to render the report, but that is unnceccsary and just using the "make" command is easier)
 
-##Structure of Repository
+## Structure of Repository
 
 `code` folder houses all code further outlined in the below code description.
 
@@ -30,7 +41,7 @@ folder
 `Report.RMD` is the RMarkdown report that combines all of the data into a nicely
 formated report
 
-##Code Description
+## Code Description
 
 `library.R`
 - This houses all the packages I used in my code, so I don't have to call it in

@@ -14,10 +14,8 @@ opts_chunk$set(
 )
 ```
 
-```{r, here_i_am, eval = params$production}
-here::i_am(
-  "report.Rmd"
-)
+```{r, here_i_am, eval = params$production} 
+here::i_am( "Report.Rmd" ) 
 ```
 
 ```{r, read code}
